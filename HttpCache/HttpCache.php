@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpCache\Esi;
 use Symfony\Component\HttpKernel\HttpCache\HttpCache as BaseHttpCache;
 use Symfony\Component\HttpKernel\HttpCache\Store;
+use Symfony\Component\HttpKernel\HttpCache\StoreInterface;
+use Symfony\Component\HttpKernel\HttpCache\SurrogateInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -72,11 +74,17 @@ class HttpCache extends BaseHttpCache
         return [];
     }
 
+    /**
+     * @return SurrogateInterface
+     */
     protected function createSurrogate()
     {
         return new Esi();
     }
 
+    /**
+     * @return StoreInterface
+     */
     protected function createStore()
     {
         return new Store($this->cacheDir ?: $this->kernel->getCacheDir().'/http_cache');
